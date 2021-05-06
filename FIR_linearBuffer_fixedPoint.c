@@ -3,11 +3,12 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<math.h>
-#define input_Len 40
+#define input_Len 30
 #define FIR_FILTER_LENGTH 15
-static int16_t coefficients[FIR_FILTER_LENGTH] = {-2,-2,0,10,33,64,91,102,91,64,33,10,0,-2,-2};
+static int16_t coefficients[FIR_FILTER_LENGTH] = {-57,-64,0,335,1062,2050,2926,3277,2926,2050,1062,335,0,-64,-57};
+// these coefficients were generated from MATLAB file (FIRfilterDesign_plusWindowDemo.m)
 
-int8_t Q = 9;  // Q refers to the fractional part's number of bits
+int8_t Q = 14;  // Q refers to the fractional part's number of bits
 #define K   (1 << (Q - 1))
 // saturate to range of int16_t
 int16_t sat16(int32_t x)
@@ -85,8 +86,7 @@ int main(){
 	int16_t *filter_sig = calloc(input_Len,sizeof(int16_t));
 	printf("\n input\n");
 	for (uint16_t k=0;k<input_Len;k++){
-		sig[k]=(0.8*sin(0.15*M_PI*k)+0.2*sin(0.93*M_PI*k)+0.1*sin(0.77*M_PI*k))*512;
-		//printf("sig[%d]=%f\n",k,*(sig+k));
+		sig[k]=(0.8*sin(0.15*M_PI*k)+0.2*sin(0.93*M_PI*k)+0.1*sin(0.77*M_PI*k))*16384;
 		printf("%d\n",*(sig+k));
 	}
 	
@@ -97,8 +97,7 @@ int main(){
 	//for (int m=0;m<1000;m++){
 	for (k = 0;k<input_Len;k++){
 		filter_sig[k] = FIRFilter_Update_fixed(fir,sig[k]);
-		//printf("filter_sig[%d]=%f\n",k,*(filter_sig+k));
-		printf("%f\n",(float)*(filter_sig+k)/512.);
+		printf("%f\n",(float)*(filter_sig+k)/16384.);
 	}
 	//}
 	end_t = clock();
