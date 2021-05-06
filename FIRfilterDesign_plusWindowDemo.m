@@ -36,5 +36,5 @@ subplot(4,1,1);plot(x1,'ko');grid;axis([0 50 -1.04 1.04])
 subplot(4,1,2);plot(filtered_x1,'mo');grid;axis([0 50 -1.04 1.04])
 subplot(4,1,3);plot(x2,'ko');grid;axis([0 50 -1.04 1.04])
 subplot(4,1,4);plot(filtered_x2,'mo');grid;axis([0 50 -1.04 1.04])
-fixedPointBw = round( bw * 2^9)  % then copy the coefficients t fixed-point version in C 
+fixedPointBw = round( bw * 2^14)  % then copy the coefficients t fixed-point version in C 
 
